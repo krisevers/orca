@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from . import utils
-from . import prior
 
 import numpy as np
 import json
+import h5py
 
 # from mpi4py import MPI
 
@@ -171,3 +171,15 @@ class Orca:
                 return False
             
         return True
+    
+    def save(self, file):
+        """
+        Save the theta and psi to a file
+        """
+        pass
+
+    def load(self, file):
+        """
+        Load the theta and psi from a file
+        """
+        pass

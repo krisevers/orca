@@ -3,3 +3,5 @@ sphinx
 numpy
 matplotlib
 h5py
+zuko
+torch

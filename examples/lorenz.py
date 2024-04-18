@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from orca import Orca, utils
+from orca import Orca, utils, inference
 
 """
 Test model for orca.
@@ -87,7 +87,7 @@ if __name__=='__main__':
     import numpy as np
     import pylab as plt
 
-    O = Orca(num_simulations=1000, num_threads=1, verbose=True)
+    O = Orca(num_simulations=100, num_threads=1, verbose=True)
 
     # create lorenz object
     L = Lorenz()
@@ -107,15 +107,18 @@ if __name__=='__main__':
     O() # Show summary of the orca object
 
     # Post-process the results
-    means = np.array([np.mean(psi[s]['CrossCorr']) for s in range(O.num_simulations)])
-    std   = np.array([np.std(psi[s]['CrossCorr']) for s in range(O.num_simulations)])
+    psi = np.array([psi[s]['CrossCorr'] for s in range(O.num_simulations)])
 
     sigma = np.array([theta[s]['Lorenz']['sigma'] for s in range(O.num_simulations)])
     rho   = np.array([theta[s]['Lorenz']['rho'] for s in range(O.num_simulations)])
     beta  = np.array([theta[s]['Lorenz']['beta'] for s in range(O.num_simulations)])
 
-    plt.figure()
-    plt.plot(sigma, means, 'o')
-    plt.xlabel('sigma')
-    plt.ylabel('CrossCorr')
-    plt.show()
+    theta = np.array([sigma, rho, beta]).T
+
+
+    # Train a normalizing flow network
+    flow = inference.train(psi, theta, device='cuda')
+
+    samples = inference.sample(flow, psi)
+
+    import IPython; IPython.embed()
