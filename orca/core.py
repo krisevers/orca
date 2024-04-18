@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from . import utils
+from . import prior
 
 import numpy as np
 import json

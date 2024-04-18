@@ -1,1 +1,1 @@
-{"Lorenz": {"sigma": {"low": 0, "high": 20, "distribution": "uniform"}, "rho": {"low": 0, "high": 50, "distribution": "uniform"}, "beta": {"low": 0, "high": 10, "distribution": "uniform"}}}
+{"Lorenz": {"sigma": {"mean": 10, "std": 2, "distribution": "normal"}, "rho": {"mean": 28, "std": 4, "distribution": "normal"}, "beta": {"mean": 2, "std": 0.5, "distribution": "normal"}}}
