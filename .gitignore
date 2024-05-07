@@ -89,3 +89,7 @@ orcaenv/
 
 # Rope project settings
 .ropeproject
+
+# json and Snakemake files in examples
+examples/*.json
+examples/Snakemake.*

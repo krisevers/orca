@@ -84,6 +84,7 @@ class CrossCorr:
 
 if __name__=='__main__':
 
+    import torch
     import numpy as np
     import pylab as plt
 
@@ -117,8 +118,9 @@ if __name__=='__main__':
 
 
     # Train a normalizing flow network
-    flow = inference.train(psi, theta, device='cuda')
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    flow = inference.train(psi, theta, device=device)
 
-    samples = inference.sample(flow, psi)
+    samples = inference.sample(flow, psi, device=device)
 
     import IPython; IPython.embed()

@@ -1,0 +1,8 @@
+{
+    "models": {
+        "Lorenz": {
+            "call": "python -c \"import lorenz; L = lorenz(); L()",
+            "description": "Lorenz attractor simulation"
+        }
+    }
+}

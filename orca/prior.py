@@ -6,31 +6,32 @@ import pylab as plt
 Tools for creating and reading prior files and visualizing the prior distributions
 """
 
-def set_prior(file, object : str, parameter : str, distribution : str, *args, **kwargs):
+def prior(model : str, parameter : str, distribution : str, *args, **kwargs):
     """
     Generate or append to the theta dictionary
     """
+    print('Appending prior...')
     try:
-        prior = json.load(open(file))
+        prior = json.load(open('prior.json'))
     except:
         prior = {}
-    if object not in prior:
-        prior[object] = {}
-    if distribution not in prior[object]:
-        prior[object][parameter] = {}
+    if model not in prior:
+        prior[model] = {}
+    if distribution not in prior[model]:
+        prior[model][parameter] = {}
 
     if distribution == 'uniform':
-        prior[object][parameter]['low'] = kwargs['low']
-        prior[object][parameter]['high'] = kwargs['high']
-        prior[object][parameter]['distribution'] = distribution
+        prior[model][parameter]['low'] = kwargs['low']
+        prior[model][parameter]['high'] = kwargs['high']
+        prior[model][parameter]['distribution'] = distribution
     elif distribution == 'normal':
-        prior[object][parameter]['mean'] = kwargs['mean']
-        prior[object][parameter]['std'] = kwargs['std']
-        prior[object][parameter]['distribution'] = distribution
+        prior[model][parameter]['mean'] = kwargs['mean']
+        prior[model][parameter]['std'] = kwargs['std']
+        prior[model][parameter]['distribution'] = distribution
 
-    json.dump(prior, open(file, 'w'))
+    json.dump(prior, open('prior.json', 'w'))
 
-def sample(file, num_samples : int):
+def sample_prior(num_samples : int):
     """
     Sample from the prior distributions
 
@@ -46,18 +47,18 @@ def sample(file, num_samples : int):
     dict
         Dictionary of samples
     """
-    prior = json.load(open(file))
+    prior = json.load(open('prior.json'))
     samples = {}
-    for object in prior:
-        samples[object] = {}
-        for parameter in prior[object]:
-            if prior[object][parameter]['distribution'] == 'uniform':
-                samples[object][parameter] = np.random.uniform(prior[object][parameter]['low'], prior[object][parameter]['high'], num_samples)
-            elif prior[object][parameter]['distribution'] == 'normal':
-                samples[object][parameter] = np.random.normal(prior[object][parameter]['mean'], prior[object][parameter]['std'], num_samples)
+    for model in prior:
+        samples[model] = {}
+        for parameter in prior[model]:
+            if prior[model][parameter]['distribution'] == 'uniform':
+                samples[model][parameter] = np.random.uniform(prior[model][parameter]['low'], prior[model][parameter]['high'], num_samples)
+            elif prior[model][parameter]['distribution'] == 'normal':
+                samples[model][parameter] = np.random.normal(prior[model][parameter]['mean'], prior[model][parameter]['std'], num_samples)
     return samples
 
-def plot(file):
+def plot_prior(file):
 
     prior = json.load(open(file))
     for object in prior:
