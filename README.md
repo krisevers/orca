@@ -1,11 +1,18 @@
 # orca
 Orca provides tools for sequentially running generative models to obtain a well organized dataset of parameters and their associated observables from model simulations.
 
+When appending your models a file is generated: `orca.json`. This file contains all information about the full generative process, i.e. which models are going to be executed and how they should be called. To run the models in sequence, sample from the predefined prior (`prior.json`) and receive the simulation results (simulation output `psi` and parameters `theta`) use the `O.run(prior.json)` function call. 
+
 ## Applications
 * Biophysical modelling where multiple layers of generative and observational models are required.
 * Inference and analysis of relationships between model parameters and observables (Simulation Based Inference).
 
 ## Installation
+To install the required dependencies, you can use the `requirements.txt` file provided in the repository. Run the following command:
+
+```sh
+pip install -r requirements.txt
+```
 
 ## Usage
 
